@@ -156,7 +156,7 @@ This project aims to set up a secure Linux server aro support [Item Catalog App]
     * First change the oauth credentials in your app console by adding `ec2-52-11-8-252.us-west-2.compute.amazonaws.com` into **Authorized Javascript origins** and `ec2-52-11-8-252.us-west-2.compute.amazonaws.com/oauth2callback` into **Authorized Redirect URL**
     * Second, change the site url for the app in FB developer console: `http://52.11.8.252`
     * Third, update `fb_client secrets.json` and `client_secrets.json` file for the new app information
-    * Finally, update all paths that use `fb_client secrets.json` and `client_secrets.json`, for example,
+    * Finally, update all paths in `project.py` that use `fb_client secrets.json` and `client_secrets.json`, for example,
     `CLIENT_ID = json.loads(
     open('/var/www/itemcatalog/Project-Item-Catalog/project/catalog/client_secrets.json', 'r').read())['web']['client_id']`
 8. Restart Apache server
