@@ -107,7 +107,7 @@ This project aims to set up a secure Linux server aro support [Item Catalog App]
         * `postgres=# \c itemcatalog`
     * Set credentials for user itemcatalog:
         * `$ REVOKE ALL ON SCHEMA public FROM public;`
-        * `$ GRANT ALL ON SCHEMA public TO catalog;`
+        * `$ GRANT ALL ON SCHEMA public TO itemcatalog;`
     * Quit psql and exit:
         * `\q`
         * `exit`
