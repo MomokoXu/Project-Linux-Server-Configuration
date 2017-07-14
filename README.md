@@ -34,7 +34,7 @@ This project aims to set up a secure Linux server aro support [Item Catalog App]
 ### Step2: Secure Your Server
 1. Change the SSH port from 22 to 2200:
     * Firstly configure your firewall to allow incoming tcp connections from port 2200 and udp connections from port 123.
-        ![Image of webpage](https://github.com/MomokoXu/Project-Linux-Server-Configuration/blob/master/images/lightsail_8.png)
+        ![Image of webpage](https://github.com/MomokoXu/Project-Linux-Server-Configuration/blob/master/images/lightsail_8%20.png)
     * Then change the **Port** from 22 to 2200, set **PermitRootLogin no**, and **PasswordAuthentication no** by editing your ssh config file:
     `$ sudo nano /etc/ssh/sshd_config`
     * Restart ssh:
