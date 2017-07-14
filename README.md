@@ -94,9 +94,8 @@ This project aims to set up a secure Linux server aro support [Item Catalog App]
         from project import app as application
         ```
     * Move into itemcatalog directory and clone the app repository:
-    `$ cd /var/www/itemcatalog`
-    `$ git clone https://github.com/MomokoXu/Project-Item-Catalog`
-    *
+        * `$ cd /var/www/itemcatalog`
+        * `$ git clone https://github.com/MomokoXu/Project-Item-Catalog`
 4. Install the virtual environment
 ---
 
