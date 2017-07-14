@@ -9,6 +9,7 @@ This project aims to set up a secure Linux server aro support [Item Catalog App]
 ---
 ## Server Info
 * IP Address: 52.11.8.252
+* URL: http://52.11.8.252
 * SSH port number: 2200
 ---
 ## Setup Steps
