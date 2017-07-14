@@ -4,7 +4,7 @@
 ---
 
 ## Introduction
-This project aims to set up a secure Linux server aro support [Item Catalog App](https://github.com/MomokoXu/Project-Item-Catalog) running on it.
+This project aims to set up a secure Linux server and support [Item Catalog App](https://github.com/MomokoXu/Project-Item-Catalog) running on it.
 
 ---
 ## Server Info
