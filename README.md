@@ -8,7 +8,7 @@ This project aims to set up a secure Linux server aro support [Item Catalog App]
 
 ---
 ## Server Info
-* IP Address: 52.11.8.252
+* IP Address: http://52.11.8.252
 * URL: http://52.11.8.252
 * SSH port number: 2200
 ---
@@ -84,9 +84,42 @@ This project aims to set up a secure Linux server aro support [Item Catalog App]
 3. Clone Item Catalog App from Github
     * `$ sudo mkdir /var/www/itemcatalog`
     * Change owner for the itemcatalog folder `sudo chown -R grader:grader itemcatalog`
+    * Move into itemcatalog directory and clone the app repository:
+        * `$ cd /var/www/itemcatalog`
+        * `$ git clone https://github.com/MomokoXu/Project-Item-Catalog`
+4. Install and configure the virtual environment
+    * Install pip: `$ sudo apt-get install python-pip`
+    * Install virtualenv: `$ sudo pip install virtualenv`
+    * Rename virtualenv: `$ sudo virtualenv venv`
+    * Change premission: `$ sudo chmod -R 777 venv`
+    * Activate virtual environment: `$ source venv/bin/activate`
+    * Install all modules for this project, for example Flask, `$ pip install Flask`
+    * Restart apache: `$ sudo service apache2 restart`
+5. Install PostgreSQL and setup database
+    * Install PostgreSQL: `sudo apt-get install postrgresql postgresql-contrib`
+    * Change user to postgres and start psql:
+        * `$ sudo su - postgres`
+        * `$ psql`
+    * Create user itemcatalog with passwrod: `postgres=# CREATE USER itemcatalog WITH PASSWORD 'anypassword';`
+    * Allow user itemcatalog to create database, created database and connect to database:
+        * `postgres=# ALTER USER itemcatalog CREATEDB;`
+        * `postgres=# CREATE DATABASE itemcatalog WITH USER itemcatalog;`
+        * `postgres=# \c itemcatalog`
+    * Set credentials for user itemcatalog:
+        * `$ REVOKE ALL ON SCHEMA public FROM public;`
+        * `$ GRANT ALL ON SCHEMA public TO catalog;`
+    * Quit psql and exit:
+        * `\q`
+        * `exit`
+    * Change data_setup.py and project.py to connect current database:
+        **Change** `engine = create_engine('sqlite:///item_catalog.db')`
+        **to** `engine = create_engine('postgresql://catalog:anypassword@localhost/itemcatalog')`
+    * Setup database: `$ python database_setup.py`
+6. Configure and Enable a new virtual host
+    * Change directory: `$ cd /var/www/itemcatalog`
     * Create a itemcatalog.wsgi file to serve the application
     `$ sudo nano itemcatalog.wsgi`
-    Paste the following into the wsgi file
+    * Paste the following into the wsgi file
         ```
         import sys
         import logging
@@ -94,10 +127,43 @@ This project aims to set up a secure Linux server aro support [Item Catalog App]
         sys.path.insert(0, "/var/www/itemcatalog/Project-Item-Catalog/project/catalog/")
         from project import app as application
         ```
-    * Move into itemcatalog directory and clone the app repository:
-        * `$ cd /var/www/itemcatalog`
-        * `$ git clone https://github.com/MomokoXu/Project-Item-Catalog`
-4. Install the virtual environment
+    * Configure the virtual host to our domain
+    `$ sudo nano /etc/apache2/sites-available/itemcatalog.conf`
+    ```
+        <VirtualHost *:80>
+            ServerName 52.11.8.252
+            ServerAlias ec2-52-11-8-252.us-west-2.compute.amazonaws.com
+            ServerAdmin admin@52.11.8.252
+            WSGIDaemonProcess itemcatalog python-path=/var/www/itemcatalog:/var/www/itemcatalog/venv/lib/python2.7/site-packages
+            WSGIProcessGroup itemcatalog
+            WSGIScriptAlias / /var/www/itemcatalog/itemcatalog.wsgi
+            <Directory /var/www/itemcatalog/Project-Item-Catalog/project/catalog/>
+                Order allow,deny
+                Allow from all
+            </Directory>
+            Alias /static /var/www/itemcatalog/Project-Item-Catalog/project/catalog/static
+            <Directory /var/www/itemcatalog/Project-Item-Catalog/project/catalog/static/>
+                Order allow,deny
+                Allow from all
+            </Directory>
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            LogLevel warn
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+        </VirtualHost>
+    ```
+    * Enable this new virtual host: `$ sudo a2ensite itemcatalog`
+7. Fix the Oauth for Google and Facebook Login
+    * First change the oauth credentials in your app console by adding `ec2-52-11-8-252.us-west-2.compute.amazonaws.com` into **Authorized Javascript origins** and `ec2-52-11-8-252.us-west-2.compute.amazonaws.com/oauth2callback` into **Authorized Redirect URL**
+    * Second, change the site url for the app in FB developer console: `http://52.11.8.252`
+    * Third, update `fb_client secrets.json` and `client_secrets.json` file for the new app information
+    * Finally, update all paths that use `fb_client secrets.json` and `client_secrets.json`, for example,
+    `CLIENT_ID = json.loads(
+    open('/var/www/itemcatalog/Project-Item-Catalog/project/catalog/client_secrets.json', 'r').read())['web']['client_id']`
+8. Restart Apache server
+    * `$ sudo service apache2 restart`
+### Final Step: Open Link: http://52.11.8.252
+![image of webpage](https://github.com/MomokoXu/Project-Linux-Server-Configuration/blob/master/images/app_sample.png)
+
 ---
 
 ## Author
