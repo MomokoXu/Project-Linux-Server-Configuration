@@ -113,7 +113,7 @@ This project aims to set up a secure Linux server aro support [Item Catalog App]
         * `exit`
     * Change data_setup.py and project.py to connect current database:
         **Change** `engine = create_engine('sqlite:///item_catalog.db')`
-        **to** `engine = create_engine('postgresql://catalog:anypassword@localhost/itemcatalog')`
+        **to** `engine = create_engine('postgresql://itemcatalog:anypassword@localhost/itemcatalog')`
     * Setup database: `$ python database_setup.py`
 6. Configure and Enable a new virtual host
     * Change directory: `$ cd /var/www/itemcatalog`
