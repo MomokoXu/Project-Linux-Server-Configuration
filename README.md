@@ -170,5 +170,11 @@ This project aims to set up a secure Linux server aro support [Item Catalog App]
 [Yingtao Xu](https://github.com/MomokoXu)
 
 ---
+## References and Resources
+* [SSH Essentials: Working with SSH Servers, Clients, and Keys](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
+* [README.md from sturken](https://github.com/stueken/FSND-P5_Linux-Server-Configuration)
+* [askubuntu](https://askubuntu.com/questions)
+* [Stackoverflow](https://stackoverflow.com/)
+* [Udacity Forum](https://discussions.udacity.com/)
 ## Copyright
 This is a project for practicing skills in databses and backend courses not for any business use. Some templates and file description are used from [Udacity FSND program](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd004). Please contact me if you think it violates your rights.
